@@ -1,3 +1,4 @@
 module.exports = { 
-    apiKey: 'ENTER YOUR API KEY', //paste your API key here
-  };
+  // paste your API key here
+  apiKey: 'ENTER YOUR API KEY', 
+};
