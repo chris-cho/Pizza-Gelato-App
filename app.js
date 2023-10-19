@@ -9,7 +9,7 @@ const app = express()
 
 // define methods for incoming messages
 const inbound = { 
-  // Logs inbound message details
+  // logs inbound message details
   logText(message) {
     console.log(`\nIncoming message... \nFrom: ${message.from.phone_number} \nTo: ${message.to[0].phone_number} \nText: ${message.text}`)
   },
@@ -62,7 +62,10 @@ const outbound = {
       text
     },
       function(err, response) {
-        console.log(`\nReplying...\nFrom: ${from} \nTo: ${to} \nText: ${text}`)
+        // error catching for anything Telnyx SDK related
+        err ?
+        console.log(`\nAn error has occurred! Please refer to the Telnyx site for status code ${err.raw.statusCode} ${err.type}`)
+        : console.log(`\nReplying...\nFrom: ${from} \nTo: ${to} \nText: ${text}`)
     })
   }
 }
