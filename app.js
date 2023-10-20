@@ -37,21 +37,28 @@ const inbound = {
   // check keyword using regex filter
   checkKeyword(string, keywords) { 
     // hold keyword and return at the end of method
-    let word = 'other'
+    let word = 'neither'
 
-    keywords.forEach((keyword) => {
-      string.replace(/[^\w\s\']|_/g, '').replace(/\s+/g, '').toLowerCase().includes(keyword) && (word = keyword)
+    keywords.forEach((keyword, index) => {
+      if (string.replace(/[^\w\s\']|_/g, '').replace(/\s+/g, '').toLowerCase().includes(keyword)) {
+        if (word === keywords[index-1]) {
+          word = 'both'
+        }
+        else {
+          word = keyword
+        }
+      }
     })
-
     return word
   } 
 }
 
 // define method to send SMS out and the text of it
 const outbound = { 
-  pizza: 'Chicago pizza is the best',
-  icecream: 'I prefer gelato',
-  other: `Please send either the word 'pizza' or 'ice cream' for a different response.`,
+  pizza: `It's me, Mario! Come try out our new pizza menu, toad mushroom pizza!`,
+  gelato: `It's me, Luigi! Come check out our seasonal menus at Big Boo Gelato!`,
+  both: `Try out the Mario brothers' lunch combo today! Comes with a Supreme Mario Pizza and a scoop of the infamous Yoshi shell Gelato!`,
+  neither: `Thanks for texting the Mario Brothers! Text 'pizza' or 'gelato' to find out more about our restaurants!`,
 
   // send message out using Telnyx SDK
   sendSms(from, to, text) { 
@@ -81,7 +88,7 @@ app.listen(5000, () => {
 // define what script should do when webhook is received on /messaging/inbound
 app.post('/messaging/inbound', (req, res) => { 
   // words to look for
-  let keywords = ['icecream', 'pizza'] 
+  let keywords = ['gelato', 'pizza'] 
 
   // hold message details for readability
   let message = req.body.data.payload 
