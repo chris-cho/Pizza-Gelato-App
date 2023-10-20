@@ -56,7 +56,6 @@ This app is built on Node JS with the following libraries and frameworks:
 
 * <a href=https://www.npmjs.com/package/telnyx>Telnyx</a>
 * <a href=https://www.npmjs.com/package/express>Express</a>
-* <a href=https://www.npmjs.com/package/http-server>HTTP-Server </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -97,6 +96,9 @@ _Mainly for Windows: please make sure your environmental variables are set prope
    const apiKey = 'ENTER YOUR API KEY';
    ```
 5. Get a number from Telnyx
+<a href="usage_1">
+    <img src="https://i.imgur.com/rIbbpNG.png" width="800" height="350">
+  </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -104,7 +106,7 @@ _Mainly for Windows: please make sure your environmental variables are set prope
 
 ## Usage
 
-1. Start ngrok on HTTP 5000 and grab the URL 
+1. Start ngrok on port 5000 and grab the URL 
 ```sh
    ngrok http 5000
    ```
@@ -144,7 +146,7 @@ Text: What pizza should I get today?
 Replying... 
 From: +E164
 To: +E164
-Text: Chicago pizza is the best
+Text: It's me, Mario! Come try out our new pizza menu, toad mushroom pizza!
 
 Message Sent!
 
@@ -158,7 +160,7 @@ Sent message has successfully been delivered!
 
 1. Port<br/>
 ```js
-// line 73-75
+// line 84-86
 app.listen(5000, () => { 
   console.log(`Listening on port 5000. Script published on /messaging/inbound.`)
 })
@@ -171,15 +173,16 @@ _Modify array and responses_
 // line 80
 let keywords = ['icecream', 'pizza']
 
-// line 51-53
-pizza: 'Chicago pizza is the best',
-icecream: 'I prefer gelato',
-other: `Please send either the word 'pizza' or 'ice cream' for a different response.`,
+// line 58-61
+pizza: `It's me, Mario! Come try out our new pizza menu, toad mushroom pizza!`,
+gelato: `It's me, Luigi! Come check out our seasonal menus at Big Boo Gelato!`,
+both: `Try out the Mario brothers' lunch combo today! Comes with a Supreme Mario Pizza and a scoop of the infamous Yoshi shell Gelato!`,
+neither: `Thanks for texting the Mario Brothers! Text 'pizza' or 'gelato' to find out more about our restaurants!`,
 ```
 
 3. Responses to corresponding status
 ```js
-// line 16-33
+// line 17-33
 checkStatus(message) { 
     switch(message.to[0].status) {
       case 'webhook_delivered':
